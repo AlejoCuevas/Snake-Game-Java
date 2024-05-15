@@ -12,14 +12,17 @@ class Serpiente {
   }
   void actualizar() {
     Segmento cabeza = segmentos.get(0);
-    int newX = cabeza.x + xdir * 20;
-    int newY = cabeza.y + ydir * 20;
+    int newX = cabeza.x + xdir * 5; //Velocidad de la serpiente
+    int newY = cabeza.y + ydir * 5; //Velocidad de la serpiente
+
     segmentos.add(0, new Segmento(newX, newY));
     segmentos.remove(segmentos.size() - 1); // Remueve el último segmento
   }
   void crecer() {
     Segmento cola = segmentos.get(segmentos.size() - 1);
-    segmentos.add(new Segmento(cola.x, cola.y));
+    for (int i = 0; i < 3; i++) {
+      segmentos.add(new Segmento(cola.x, cola.y));
+    }
   }
   void mostrar() {
     fill(colorSerpiente);
@@ -32,8 +35,13 @@ class Serpiente {
     ydir = y;
   }
   boolean colision(int x, int y) {
-    Segmento cabeza = segmentos.get(0);
-    return cabeza.x == x && cabeza.y == y;
+    for (Segmento s : segmentos) {
+      // Verificar si alguna parte de la serpiente coincide con el cuadrado de la comida
+      if (s.x == x && s.y == y) {
+        return true;
+      }
+    }
+    return false;
   }
   boolean colisionPared() {
     Segmento cabeza = segmentos.get(0);

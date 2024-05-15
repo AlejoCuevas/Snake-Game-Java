@@ -95,10 +95,10 @@ void keyPressed() {
     if (keyCode == DOWN && pantallaDeJuego.serpiente.ydir == 0) {
       pantallaDeJuego.cambiarDireccion(0, 1);
     }
-    if (keyCode == LEFT && pantallaDeJuego.serpiente.ydir == 0) {
+    if (keyCode == LEFT && pantallaDeJuego.serpiente.xdir == 0) {
       pantallaDeJuego.cambiarDireccion(-1, 0);
     }
-    if (keyCode == RIGHT && pantallaDeJuego.serpiente.ydir == 0) {
+    if (keyCode == RIGHT && pantallaDeJuego.serpiente.xdir == 0) {
       pantallaDeJuego.cambiarDireccion(1, 0);
     } else if (keyCode == TAB) {
       estado = 0; // Volver al menú
