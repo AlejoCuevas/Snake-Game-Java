@@ -1,10 +1,10 @@
 class PantallaDeJuego {
-  
   Serpiente serpiente;
   Comida comida;
   int puntuacion;
+  PantallaOpciones pantallaOpciones;
   
-  PantallaJuego() {
+  PantallaDeJuego() {
   color colorSerpiente = pantallaOpciones.getColorSerpiente();
   color colorComida = color(255, 0, 0);
   serpiente = new Serpiente(colorSerpiente);
@@ -27,6 +27,14 @@ class PantallaDeJuego {
     println("Game Over: " + puntuacion);
     noLoop();
     }
-    
+    mostrarPuntuacion();
+  }
+void mostrarPuntuacion() {
+    fill(255);
+    textSize(20);
+    text("Puntuacion: " + puntuacion, 50, 50);
+  }
+  void cambiarDireccion(int x, int y) {
+    serpiente.direccion(x, y);
   }
 }

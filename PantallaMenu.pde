@@ -11,8 +11,8 @@ void settings() {
 }
 
 void setup() {
-  pantallaDeJuego = new PantallaDeJuego(); // Inicializa la instancia de PantallaDeJuego
   pantallaOpciones = new PantallaOpciones(); // Inicializa la instancia de PantallaOpciones
+  pantallaDeJuego = new PantallaDeJuego(pantallaOpciones); // Inicializa la instancia de PantallaDeJuego 
 }
 
 void draw() {
@@ -59,47 +59,62 @@ void mostrarMenu() {
 }
 
 void keyPressed() {
-    if (estado == 0) { // Navegar por el menú
-      if (keyCode == UP) {
-        opcion--;
-        if (opcion < 0) {
-          opcion = totalOpciones - 1;
-        }
-      } else if (keyCode == DOWN) {
-        opcion++;
-        if (opcion >= totalOpciones) {
-          opcion = 0;
-        }
-      } else if (keyCode == ENTER) {
-        // Acción para cada opción seleccionada
-        switch (opcion) {
-        case 0:
-          println("Jugar seleccionado");
-          estado = 1;
-          break;
-        case 1:
-          println("Opciones seleccionadas");
-          estado = 2;
-          break;
-        case 2:
-          println("Salir seleccionado");
-          // Salir del juego
-          exit();
-          break;
-        }
+  if (estado == 0) { // Navegar por el menú
+    if (keyCode == UP) {
+      opcion--;
+      if (opcion < 0) {
+        opcion = totalOpciones - 1;
       }
-    } else if (estado == 2) { // En el estado de opciones
-      if (keyCode == UP) {
-        pantallaOpciones.cambiarOpcion(0);
-      } else if (keyCode == DOWN) {
-        pantallaOpciones.cambiarOpcion(1);
-      } else if (keyCode == TAB) {
-        estado = 0;  // Volver al menú
+    } else if (keyCode == DOWN) {
+      opcion++;
+      if (opcion >= totalOpciones) {
+        opcion = 0;
       }
-    } else { // En cualquier otro estado, se puede volver al menú presionando TAB
-      if (keyCode == TAB) {
-        println("Volver al menú");
-        estado = 0;
+    } else if (keyCode == ENTER) {
+      // Acción para cada opción seleccionada
+      switch (opcion) {
+      case 0:
+        println("Jugar seleccionado");
+        estado = 1;
+        break;
+      case 1:
+        println("Opciones seleccionadas");
+        estado = 2;
+        break;
+      case 2:
+        println("Salir seleccionado");
+        // Salir del juego
+        exit();
+        break;
       }
     }
+  } else if (estado == 1) { // En el estado de juego
+    if (keyCode == UP && pantallaDeJuego.serpiente.ydir == 0) {
+      pantallaDeJuego.cambiarDireccion(0, -1);
+    }
+    if (keyCode == DOWN && pantallaDeJuego.serpiente.ydir == 0) {
+      pantallaDeJuego.cambiarDireccion(0, 1);
+    }
+    if (keyCode == LEFT && pantallaDeJuego.serpiente.ydir == 0) {
+      pantallaDeJuego.cambiarDireccion(-1, 0);
+    }
+    if (keyCode == RIGHT && pantallaDeJuego.serpiente.ydir == 0) {
+      pantallaDeJuego.cambiarDireccion(1, 0);
+    } else if (keyCode == TAB) {
+      estado = 0; // Volver al menú
+    }
+  } else if (estado == 2) { // En el estado de opciones
+    if (keyCode == UP) {
+      pantallaOpciones.cambiarOpcion(0);
+    } else if (keyCode == DOWN) {
+      pantallaOpciones.cambiarOpcion(1);
+    } else if (keyCode == TAB) {
+      estado = 0;  // Volver al menú
+    }
+  } else { // En cualquier otro estado, se puede volver al menú presionando TAB
+    if (keyCode == TAB) {
+      println("Volver al menú");
+      estado = 0;
+    }
   }
+}
